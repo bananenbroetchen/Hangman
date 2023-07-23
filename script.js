@@ -12,11 +12,13 @@ let correctLetters = []
 let wrongLetters = []
 let currentLetter
 let wordsArrayLength = wordsArray.length
+let shownWord = []
+let temp = false
 
 console.log(wordsArrayLength)
 
 let chosenWordPos = Math.round(Math.random()*wordsArrayLength)
-let chosenWord = wordsArray[chosenWordPos]
+let chosenWord = wordsArray[chosenWordPos].toUpperCase()
 let chosenWordLength = chosenWord.length
 console.log(chosenWordPos + " " + chosenWord + " und " + chosenWordLength + " lang")
 
@@ -26,94 +28,77 @@ console.log(chosenWordPos + " " + chosenWord + " und " + chosenWordLength + " la
 // console.log(time)
 
 function checkIfRight(currentLetter) {
+    //Check if it was already pressed right
+    for (let i = 0; i < correctLetters.length; i2++) {
+        if(currentLetter = correctLetters[i]) {
+            return true
+        }
+    }
+    //Check if it was already pressed wrong
+
+    //Check the Button if right
     for (let i = 0; i < chosenWordLength; i++) {
         if (chosenWord[i] == currentLetter) {
             console.log("richtig!")
+            correctLetters.push(currentLetter)
         }
         console.log("ok")
     }
+}
+
+function refreshShownWord () {
+    shownWord = []
+    for (let i = 0; i < chosenWordLength; i++) {
+        for (let i2 = 0; i2 < correctLetters.length; i2++) {
+            if(chosenWord[i] = correctLetters[i2]) {
+                temp = true
+            }
+        }
+        if (temp === true) {
+            shownWord.push(chosenWord[i]);
+        } else{
+            shownWord.push('_');
+        }
+        temp = false;
+    }
+    // Refresh Counters:
+    correctLettersCounter = correctLetters.length
+    wrongLettersCounter = wrongLetters.length
 }
 
 // currentLetter = prompt ("Was schätzt du?")
 
 
 function keyTyped() {
-    if(key === 'q') {
-        checkIfRight('q')
-    } else if(key === 'w') {
-        checkIfRight('w')
-    } else if(key === 'e') {
-        checkIfRight('e')
-    } else if(key === 'r') {
-        checkIfRight('r')
-    } else if(key === 't') {
-        checkIfRight('t')
-    } else if(key === 'z') {
-        checkIfRight('z')
-    } else if(key === 'u') {
-        checkIfRight('u')
-    } else if(key === 'i') {
-        checkIfRight('i')
-    } else if(key === 'o') {
-        checkIfRight('o')
-    } else if(key === 'p') {
-        checkIfRight('p')
-    } else if(key === 'ü') {
-        checkIfRight('ü')
-    } else if(key === 'a') {
-        checkIfRight('a')
-    } else if(key === 's') {
-        checkIfRight('s')
-    } else if(key === 'd') {
-        checkIfRight('d')
-    } else if(key === 'f') {
-        checkIfRight('f')
-    } else if(key === 'g') {
-        checkIfRight('g')
-    } else if(key === 'h') {
-        checkIfRight('h')
-    } else if(key === 'j') {
-        checkIfRight('j')
-    } else if(key === 'k') {
-        checkIfRight('k')
-    } else if(key === 'l') {
-        checkIfRight('l')
-    } else if(key === 'ö') {
-        checkIfRight('ö')
-    } else if(key === 'ä') {
-        checkIfRight('ä')
-    } else if(key === 'y') {
-        checkIfRight('y')
-    } else if(key === 'x') {
-        checkIfRight('x')
-    } else if(key === 'c') {
-        checkIfRight('c')
-    } else if(key === 'v') {
-        checkIfRight('v')
-    } else if(key === 'b') {
-        checkIfRight('b')
-    } else if(key === 'n') {
-        checkIfRight('n')
-    } else if(key === 'm') {
-        checkIfRight('m')
+    // in kleinbuchstaben:
+    const lowercaseKey = key.toUpperCase();
+    
+    if (/[A-ZÖÄÜ]/.test(lowercaseKey)) {
+        checkIfRight(lowercaseKey);
     }
 }
 
+
 function drawInterface() {
     clear()
+    refreshShownWord()
     background("grey")
     textSize(18)
     text('Hangman', 10, 25)
+    text(correctLettersCounter + ' Richtig: ' + correctLetters, 10, 45)
+    text(wrongLettersCounter + ' Falsch: ' + wrongLetters, 10, 65)
+    text(shownWord, 10, 85)
     
 }
 
 function setup() {
     createCanvas(500, 200)
     drawInterface()
+    frameRate(10)
 }
 
 function draw() {
-
+    drawInterface()
 }
 
 // temp
