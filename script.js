@@ -82,19 +82,24 @@ function keyTyped() {
 function drawInterface() {
     clear()
     refreshShownWord()
-    background("grey")
+    background("darkgrey")
     textSize(18)
+    textFont('Ubuntu')
+    fill('lightgrey')
     text('Hangman', 10, 25)
+    fill('lightgreen')
     text(correctLettersCounter + ' Richtig: ' + correctLetters, 10, 45)
+    fill(220, 30, 30)
     text(wrongLettersCounter + ' Falsch: ' + wrongLetters, 10, 65)
+    fill('white')
     text(shownWord, 10, 85)
     
 }
 
 function setup() {
-    createCanvas(500, 200)
+    createCanvas(300, 200)
     drawInterface()
-    frameRate(10)
+    frameRate(2)
 }
 
 function draw() {
